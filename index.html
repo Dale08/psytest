@@ -11,13 +11,38 @@
     <link rel="stylesheet" href="app.css" data-n-g="">
 </head>
 <body>
-<div class="container">
-    <h1>ТЕСТ НА ОПРЕДЕЛЕНИЕ УРОВНЯ СТРЕССА (по В. Ю. Щербатых)
-    </h1>
-    <ul id="questions">
-
+<div id="app" class="container">
+    <!--<h1>ТЕСТ НА ОПРЕДЕЛЕНИЕ УРОВНЯ СТРЕССА (по В. Ю. Щербатых)-->
+    <!--</h1>-->
+    <ul class="questions">
+        <template v-for="question in questions" :key="question.text">
+            <li class="question" v-if="question.order  === questionNumber">
+                <h2>{{ question.text }}</h2>
+                <ul class="answers">
+                    <li v-for="answer in question.answers" :key="answer.text" v-bind:class="{'checked':answer.checked}"
+                        @click="setAnswer(answer)">
+                        {{ answer.text }}
+                        <!--<label>-->
+                        <!--<input type="checkbox" name="checkbox" value="{{ answer.value }}">-->
+                        <!--{{ answer.text }}-->
+                        <!--</label>-->
+                    </li>
+                </ul>
+            </li>
+        </template>
     </ul>
-
+    <!--{{ message }}-->
+    <!--questions-->
+    <div class="navigation">
+        <a href="#" id="prev" @click="goPrev">prev</a>
+        <a href="#" id="next" @click="goNext">next</a>
+    </div>
+    <div class="result" v-if="showResult">
+        {{ this.result }}
+    </div>
+    <div class="get-result">
+        <a href="#" @click="getResult">result</a>
+    </div>
 </div>
 <script>
     const questions = [
@@ -38,6 +63,8 @@
         }
     ];
 </script>
+<!--<script type="module" src="/questions.js"></script>-->
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="app.js"></script>
 </body>
