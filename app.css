@@ -8,6 +8,11 @@ body {
     background: var(--tg-theme-bg-color);
 }
 
+h1 {
+    font-size: 16px;
+    text-align: center;
+}
+
 ul {
     padding: 0;
 }
@@ -16,8 +21,13 @@ li {
     text-align: center;
 }
 
+a a {
+    color: var(--tg-theme-accent-text-color);
+}
+
 .container {
     max-width: 390px;
+    padding: 0 10px;
 }
 
 .questions li {
@@ -29,10 +39,11 @@ li {
     padding: 10px;
     cursor: pointer;
     margin-bottom: 10px;
+    border: 1px solid var(--tg-theme-button-color);
 }
 
 .checked {
-    background: green;
+    background: var(--tg-theme-secondary-bg-color);
     /*background: var(--tg-theme-bg-color);*/
 }
 
@@ -43,12 +54,17 @@ li {
 }
 
 .navigation a {
+    color: var(--tg-theme-accent-text-color);
     text-decoration: none;
     padding: 10px;
     background: var(--tg-theme-bg-color);
-    width: 40%;
+    width: calc(50% - 30px);
     text-align: center;
-    border: 1px solid red;
+    border: 1px solid var(--tg-theme-button-color);
+}
+
+.navigation .next {
+    margin-left: auto;
 }
 
 .result {
@@ -61,8 +77,9 @@ li {
 }
 
 .get-result a {
+    color: var(--tg-theme-accent-text-color);
     width: 100%;
     padding: 10px 0;
     text-align: center;
-    border: 1px solid red;
+    border: 1px solid var(--tg-theme-button-color);
 }

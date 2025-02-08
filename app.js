@@ -60,7 +60,15 @@ createApp({
     //     }
     // },
     setup() {
+        const resultTexts = [
+            '0-5.  означает, что в данный момент жизни сколь-либо значимый стресс отсутствует.',
+            '6-12. означает, что человек испытывает умеренный стресс, который может быть компенсирован с помощью рационального использования времени, периодического отдыха и нахождения оптимального выхода из сложившейся ситуации.',
+            '13-24. указывает на достаточно выраженное напряжение эмоциональных и физиологических систем организма, возникшее в ответ на сильный стрессорный фактор, который не удалось компенсировать. В этом случае требуется применение специальных методов преодоления стресса.'
+        ];
         let result = 0;
+        let resultText = ref('');
+        let isFirstQuestion = ref(true);
+        let isLastQuestion = ref(false);
         let questionNumber = ref(1);
         let showResult = ref(0);
         const questions = reactive(
@@ -86,12 +94,12 @@ createApp({
                     "answers": [
                         {
                             "text": "Потеря аппетита или переедание",
-                            "score": 1,
+                            "score": 10,
                             "checked": false
                         },
                         {
                             "text": "Возрастание ошибок при выполнении привычных действий",
-                            "score": 1,
+                            "score": 10,
                             "checked": false
                         }
                     ],
@@ -102,12 +110,12 @@ createApp({
                     "answers": [
                         {
                             "text": "Беспокойство, повышенная тревожность ",
-                            "score": 1,
+                            "score": 20,
                             "checked": false
                         },
                         {
                             "text": "Подозрительность",
-                            "score": 1,
+                            "score": 20,
                             "checked": false
                         }
                     ],
@@ -117,21 +125,30 @@ createApp({
         );
         return {
             questions,
+            isFirstQuestion,
+            isLastQuestion,
+            resultTexts,
             result,
+            resultText,
             showResult,
             questionNumber
         }
     },
     methods: {
         getResult() {
-            // let res = 0;
-            // this.questions.forEach((answer) => {
-            //     question.answer.forEach((answer) => {
-            //
-            //     });
-            // });
-            this.showResult = 1;
-            console.log(this.result)
+            // this.isLastQuestion = this.isFirstQuestion = true;
+            switch (true) {
+                case (0 <= this.result && this.result <= 5):
+                    this.resultText = this.resultTexts[0];
+                    break;
+                case (6 <= this.result && this.result <= 12):
+                    this.resultText = this.resultTexts[1];
+                    break;
+                case (13 <= this.result && this.result <= 24):
+                    this.resultText = this.resultTexts[2];
+                    break;
+            }
+            this.showResult = true;
         },
         setAnswer(answer) {
             answer.checked = !answer.checked;
@@ -140,28 +157,21 @@ createApp({
             } else {
                 this.result -= answer.score
             }
-            // let res = 0;
-            // this.questions.forEach((answer) => {
-            //     question.answer.forEach((answer) => {
-            //
-            //     });
-            // });
-            console.log(this.result)
         },
         goPrev() {
-            console.log(this.questionNumber);
-            if (this.questionNumber !== 1) {
+            this.showResult = this.isLastQuestion = false;
+            if (this.questionNumber > 1) {
                 this.questionNumber--;
             }
-            console.log(this.questionNumber)
+            this.isFirstQuestion = this.questionNumber <= 1;
         },
         goNext() {
-            console.log(this.questions.length);
-            if (this.questionNumber !== this.questions.length) {
+            this.showResult = this.isFirstQuestion = false;
+            if (this.questionNumber < this.questions.length) {
                 this.questionNumber++;
             }
-            console.log(this.questionNumber)
-        }
+            this.isLastQuestion = this.questionNumber >= this.questions.length;
+        },
     }
 }).mount('#app');
 

@@ -12,36 +12,39 @@
 </head>
 <body>
 <div id="app" class="container">
-    <!--<h1>ТЕСТ НА ОПРЕДЕЛЕНИЕ УРОВНЯ СТРЕССА (по В. Ю. Щербатых)-->
-    <!--</h1>-->
-    <ul class="questions">
-        <template v-for="question in questions" :key="question.text">
-            <li class="question" v-if="question.order  === questionNumber">
-                <h2>{{ question.text }}</h2>
-                <ul class="answers">
-                    <li v-for="answer in question.answers" :key="answer.text" v-bind:class="{'checked':answer.checked}"
-                        @click="setAnswer(answer)">
-                        {{ answer.text }}
-                        <!--<label>-->
-                        <!--<input type="checkbox" name="checkbox" value="{{ answer.value }}">-->
-                        <!--{{ answer.text }}-->
-                        <!--</label>-->
-                    </li>
-                </ul>
-            </li>
-        </template>
-    </ul>
-    <!--{{ message }}-->
-    <!--questions-->
-    <div class="navigation">
-        <a href="#" id="prev" @click="goPrev">prev</a>
-        <a href="#" id="next" @click="goNext">next</a>
-    </div>
-    <div class="result" v-if="showResult">
-        {{ this.result }}
-    </div>
-    <div class="get-result">
-        <a href="#" @click="getResult">result</a>
+    <h1>ТЕСТ НА ОПРЕДЕЛЕНИЕ УРОВНЯ СТРЕССА (по В. Ю. Щербатых)
+    </h1>
+    <template v-if="!showResult">
+        <ul class="questions">
+            <template v-for="question in questions" :key="question.text">
+                <li class="question" v-if="question.order === questionNumber">
+                    <h2>{{ question.text }}</h2>
+                    <ul class="answers">
+                        <li v-for="answer in question.answers" :key="answer.text"
+                            v-bind:class="{'checked':answer.checked}"
+                            @click="setAnswer(answer)">
+                            {{ answer.text }}
+                            <!--<label>-->
+                            <!--<input type="checkbox" name="checkbox" value="{{ answer.value }}">-->
+                            <!--{{ answer.text }}-->
+                            <!--</label>-->
+                        </li>
+                    </ul>
+                </li>
+            </template>
+        </ul>
+        <!--{{ message }}-->
+        <!--questions-->
+        <div class="navigation">
+            <a href="#" id="prev" class="prev" @click="goPrev" v-if="!isFirstQuestion">Предыдущий <br> вопрос</a>
+            <a href="#" id="next" class="next" @click="goNext" v-if="!isLastQuestion">Следующий <br> вопрос</a>
+        </div>
+        <div class="get-result" v-if="isLastQuestion">
+            <a href="#" @click="getResult">Узнать результат</a>
+        </div>
+    </template>
+    <div class="result" v-else>
+        {{ this.resultText }}
     </div>
 </div>
 <script>
