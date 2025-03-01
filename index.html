@@ -43,6 +43,9 @@
             <a href="#" @click="getResult">Узнать результат</a>
         </div>
     </template>
+    <div class="name">
+        {{ this.tg.initDataUnsafe.user.first_name }} {{ this.tg.initDataUnsafe.user.last_name }} - {{ this.tg.initDataUnsafe.user.username }}
+    </div>
     <div class="result" v-else>
         {{ this.resultText }}
     </div>

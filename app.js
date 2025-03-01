@@ -123,6 +123,9 @@ createApp({
                 }
             ]
         );
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+
         return {
             questions,
             isFirstQuestion,
@@ -131,7 +134,8 @@ createApp({
             result,
             resultText,
             showResult,
-            questionNumber
+            questionNumber,
+            tg
         }
     },
     methods: {
@@ -175,12 +179,8 @@ createApp({
     }
 }).mount('#app');
 
-let tg = window.Telegram.WebApp;
-
-tg.expand();
-
-tg.MainButton.textColor = '#FFFFFF';
-tg.MainButton.color = '#2cab37';
+// tg.MainButton.textColor = '#FFFFFF';
+// tg.MainButton.color = '#2cab37';
 
 
 // let usercard = document.getElementById('questions');
